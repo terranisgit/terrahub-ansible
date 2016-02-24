@@ -1,0 +1,106 @@
+- name: TerraHub georchestra deployment
+  hosts: terrahub
+  # note: above host must match the content of the "hosts" file
+  sudo: yes
+  roles:
+    - georchestra
+  vars:
+    cadastrapp: {
+      enabled: false,
+      db: {
+        name: cadastrapp_qgis,
+        user: cadastrapp_qgis,
+        schema: cadastrapp_qgis,
+        pass: cadastrapp_qgis
+      },
+      qgisdb: {
+        host: 10.0.0.9,
+        name: qadastre,
+        user: qadastre,
+        pass: qadastre,
+        schema: public
+      },
+      gitrepo: "https://github.com/GFI-Informatique/addons",
+      gitversion: master,
+      debsrc: {
+        path: /root/src/cadastrapp/cadastrapp/cadastrapp/target/,
+        pkg: georchestra-cadastrapp_1.2+201601291013-1_all.deb,
+        host: web-wheezy
+      },
+      workdir: /tmp/cadastrapp/tmp
+    }
+    openldap: {
+      topdc: georchestra,
+      basedn: "dc=georchestra,dc=org", # has to be in the form dc={{ topdc }},dc=xx
+      rootdn: "cn=admin,dc=georchestra,dc=org",
+      rootpw: "7;[oVm>!8nVQ3I]rTx",
+      gitrepo: "https://raw.github.com/georchestra/georchestra",
+      ldifs: [ bootstrap, groupofmembers, memberof, root, georchestra ],
+      gitversion: master
+    }
+    georchestra: {
+      fqdn: terrahub.terranis.fr,
+      db: {
+        name: georchestra,
+        user: georchestra,
+        pass: "a@atwQ+BE%i-3~T4Pcqtis6r"
+      },
+      datadir: {
+        path: /etc/georchestra,
+        gitrepo: "https://github.com/georchestra/datadir",
+        gitversion: master
+      },
+      debian: {
+        repo: "deb https://build.georchestra.org/debian jessie main",
+        key: "https://build.georchestra.org/debian/build.georchestra.org.asc"
+      }
+    }
+    geonetwork: {
+      db: {
+        name: geonetwork,
+        user: geonetwork,
+        pass: "#D:<vHUq0iuUgfw%mfx76pT"
+      },
+      datadir: {
+        path: /data/geonetwork/,
+        gitrepo: "https://github.com/georchestra/geonetwork_minimal_datadir",
+        gitversion: master
+      }
+    }
+    geoserver: {
+      privileged: {
+        user: geoserver_privileged_user,
+        pass: "2wzMdcu@gIQ5)dvOnwJy8"
+      },
+      datadir: {
+        path: /data/geoserver/,
+        gitrepo: "https://github.com/georchestra/geoserver_minimal_datadir",
+        gitversion: master
+      },
+      wms_srslist: [2154, 3857, 3942, 3943, 3944, 3945, 3946, 3947, 3948, 3949, 3950, 4171, 4258, 4326, 23030, 23031, 23032, 32630, 32631, 32632, 4171, 4271, 3758]
+    }
+    geowebcache_datadir: /data/geowebcache/
+    extractor_datadir: /data/extractor/
+    tomcat_keystore_pass: tomcatkstp
+    tomcat_basedir: /tomcat
+    logs_basedir: /log
+    ldapadmin_adminemail: terranis.sas@gmail.com
+    tomcat_instances: {
+      proxycas: { port: 8180, control_port: 8105 },
+      geoserver: { port: 8280, control_port: 8205 },
+      georchestra: { port: 8380, control_port: 8305 }
+    }
+    georchestra_wars: {
+      analytics: {       pkg: georchestra-analytics,       tomcat: georchestra },
+      cas: {             pkg: georchestra-cas,             tomcat: proxycas },
+      catalogapp: {      pkg: georchestra-catalogapp,      tomcat: georchestra },
+      extractorapp: {    pkg: georchestra-extractorapp,    tomcat: georchestra },
+      geonetwork: {      pkg: georchestra-geonetwork3,     tomcat: georchestra },
+      geoserver: {       pkg: georchestra-geoserver,       tomcat: geoserver },
+      geowebcache: {     pkg: georchestra-geowebcache,     tomcat: georchestra },
+      header: {          pkg: georchestra-header,          tomcat: georchestra },
+      ldapadmin: {       pkg: georchestra-ldapadmin,       tomcat: georchestra },
+      mapfishapp: {      pkg: georchestra-mapfishapp,      tomcat: georchestra },
+      cadastrapp: {      pkg: georchestra-cadastrapp,      tomcat: georchestra },
+      ROOT: {            pkg: georchestra-security-proxy,  tomcat: proxycas }
+    }

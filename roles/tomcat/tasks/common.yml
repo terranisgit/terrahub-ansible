@@ -1,0 +1,45 @@
+- name: installing dependencies
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+  - tomcat8
+  - tomcat8-user #needed for tomcat8-create-instance
+
+- name: disable default instance
+  service: name=tomcat8 state=stopped enabled=no
+
+- name: clone default keystore
+  tags: keystore
+  command: >
+    keytool -importkeystore
+      -srckeystore /etc/ssl/certs/java/cacerts \
+      -srcstorepass changeit \
+      -destkeystore /etc/tomcat8/keystore \
+      -deststorepass {{ tomcat_keystore_pass }}
+    creates=/etc/tomcat8/keystore
+
+- name: check if localhost exists in keystore
+  tags: keystore
+  command: >
+    keytool -list -alias localhost \
+      -keystore /etc/tomcat8/keystore \
+      -storepass {{ tomcat_keystore_pass }}
+  ignore_errors: yes
+  register: localhost_exists
+
+- name: create and self-sign certificate
+  tags: keystore
+  command: >
+    keytool -genkey -alias localhost \
+      -keystore /etc/tomcat8/keystore \
+      -storepass {{ tomcat_keystore_pass }} \
+      -keypass {{ tomcat_keystore_pass }} \
+      -keyalg RSA \
+      -keysize 2048 \
+      -dname "CN=localhost, O=IT, L=Somewhere, C=FR"
+  when: localhost_exists|failed
+
+- name: create tomcat_basedir
+  file: name={{ tomcat_basedir }} state=directory
+
+- name: create common logdir
+  file: path={{ logs_basedir }} state=directory owner=tomcat8 group=tomcat8

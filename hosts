@@ -1,0 +1,2 @@
+terrahub ansible_ssh_host=root@127.0.0.1
+# To deploy to a remote node, put your IP above, leaving the "mygeorchestra" string as is
