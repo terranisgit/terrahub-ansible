@@ -1,3 +1,4 @@
+
 # Ansible installer for geOrchestra on TerraHUB
 
 Original repository : [geOrchestra-ansible](https://github.com/georchestra/ansible)
@@ -22,11 +23,10 @@ In order to deploy all the middleware and components of a geOrchestra instance, 
 
 This has only been tested on Debian jessie (8.3) so far.
 
-## Cleanup
+## cleanup
 
 If you want to remove/cleanup the webapps, databases, LDAP DIT and datadirs, sub-tasks have been added and can be run using
 
 ```
 ./uninstall.sh
 
-```

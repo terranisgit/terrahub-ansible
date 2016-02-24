@@ -1,6 +1,6 @@
 JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC \
 	-Xms256m \
-	-Xmx256m \
+	-Xmx512m \
 	-XX:MaxPermSize=128m \
 	-Dgeorchestra.datadir={{ georchestra.datadir.path }} \
 	-Djavax.net.ssl.trustStore=/etc/tomcat8/keystore \
@@ -9,3 +9,5 @@ JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC \
 # Unset LC_ALL to prevent user environment executing the init script from
 # influencing servlet behavior.  See Debian bug #645221
 unset LC_ALL
+LANG=fr_FR.UTF-8
+
