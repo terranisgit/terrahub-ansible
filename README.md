@@ -1,6 +1,6 @@
 # Ansible installer for geOrchestra on TerraHUB
 
-Original repository : [geOrchestra-ansible]{https://github.com/georchestra/ansible}
+Original repository : [geOrchestra-ansible](https://github.com/georchestra/ansible)
 
 ## Warning
 
