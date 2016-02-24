@@ -5,8 +5,7 @@ Original repository : [geOrchestra-ansible](https://github.com/georchestra/ansib
 
 ## Warning
 
-THIS IS A WORK IN PROGRESS! Right now this will deploy a working georchestra from the master branch w/ geonetwork3/mapfishapp/geoserver/geowebcache
-with mostly default configs and empty databases/datadirs.
+THIS IS A WORK IN PROGRESS! Right now, this will deploy a working geOrchestra from the **master** branch with mostly default configs and empty databases/datadirs.
 
 ## Configuration
 
