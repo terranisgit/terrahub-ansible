@@ -83,7 +83,8 @@
     extractor_datadir: /data/extractor/
     tomcat_keystore_pass: tomcatkstp
     tomcat_basedir: /tomcat
-    logs_basedir: /log
+    tomcat_lang: en_US.UTF-8
+    logs_basedir: /data/log
     force_https: true
     ldapadmin_adminemail: terranis.sas@gmail.com
     tomcat_instances: {

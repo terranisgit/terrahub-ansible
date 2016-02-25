@@ -20,8 +20,8 @@
      CustomLog /var/www/georchestra/logs/access.log "combined"
      Include /var/www/georchestra/conf/*.conf
      SSLEngine On
-     SSLCertificateFile /var/www/georchestra/ssl/georchestra.crt
-     SSLCertificateKeyFile /var/www/georchestra/ssl/georchestra.key
-     SSLCACertificateFile /etc/ssl/certs/ca-certificates.crt
+     SSLCertificateFile /var/www/georchestra/ssl/2_terrahub.terranis.fr.crt
+     SSLCertificateKeyFile /var/www/georchestra/ssl/0_terrahub.terranis.fr.key
+     SSLCACertificateFile /var/www/georchestra/ssl/1_root_bundle.crt
      ServerSignature Off
 </VirtualHost>

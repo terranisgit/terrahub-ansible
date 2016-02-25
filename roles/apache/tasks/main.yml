@@ -53,14 +53,23 @@
   - { src: common, dest: cadastrapp }
   notify: reload apache2
 
-- name: generate self-signed cert
-  command: >
-    openssl req -new -nodes -x509 -subj "/C=FR/L=Somewhere/O=IT/CN={{ georchestra.fqdn }}"
-      -days 3650 -keyout /var/www/georchestra/ssl/georchestra.key -out /var/www/georchestra/ssl/georchestra.crt -extensions v3_ca
-    creates=/var/www/georchestra/ssl/georchestra.crt
+#- name: generate self-signed cert
+#  command: >
+#    openssl req -new -nodes -x509 -subj "/C=FR/L=Somewhere/O=IT/CN={{ georchestra.fqdn }}"
+#      -days 3650 -keyout /var/www/georchestra/ssl/georchestra.key -out /var/www/georchestra/ssl/georchestra.crt -extensions v3_ca
+#    creates=/var/www/georchestra/ssl/georchestra.crt
 
-- name: fix perms on certificate
-  file: path=/var/www/georchestra/ssl/georchestra.key mode=0400
+- name: Copy TerraHUB certificate key
+  copy: src=0_terrahub.terranis.fr.key dest=/var/www/georchestra/ssl mode=0400
+
+- name: Copy TerraHUB certificate
+  copy: src=1_root_bundle.crt dest=/var/www/georchestra/ssl
+
+- name: Copy TerraHUB certificate bundle
+  copy: src=2_terrahub.terranis.fr.crt dest=/var/www/georchestra/ssl
+
+#- name: fix perms on certificate
+#  file: path=/var/www/georchestra/ssl/georchestra.key mode=0400
 
 - include: clean.yml
   tags: [cleanup, apache_cleanup]
