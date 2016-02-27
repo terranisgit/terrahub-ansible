@@ -44,3 +44,17 @@
   - { file: cadastrapp.properties, war: cadastrapp, destdir: '' }
   - { file: logback.xml, war: cadastrapp, destdir: '' }
   notify: restart all tomcats
+
+
+# Cloning terranisgit/georchestra-addons into the addons folder
+# To clone this repository, the user should be able to access the private repository
+# i.e. SSH keys added to the github repo
+- name: Cloning georchestra-addons repository
+  git: repo=git@github.com:terranisgit/georchestra-addons.git
+       dest=/tmp/georchestra-addons
+
+- name: Moving addons to datadir
+  command: find /tmp/georchestra-addons/ -mindepth 1 -maxdepth 1 -type d ! -path '*.git*' -exec mv {} {{ georchestra.datadir.path }}/mapfishapp/addons \;
+
+- name: Cleaning existing data
+  command: rm -rf /tmp/georchestra-addons
