@@ -82,7 +82,7 @@
     geowebcache_datadir: /data/geowebcache/
     extractor_datadir: /data/extractor/
     tomcat_keystore_pass: tomcatkstp
-    tomcat_basedir: /tomcat
+    tomcat_basedir: /srv/tomcat
     system_locale: en_US.UTF-8
     logs_basedir: /data/log
     force_https: true
